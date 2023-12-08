@@ -1,0 +1,56 @@
+/*Query 1 -query used for first insight */
+
+SELECT a.ArtistId, a.Name , count(*)as songs 
+from Artist a
+JOIN Album b
+on a.ArtistId = b.ArtistId
+join Track t
+on t.AlbumId = b.AlbumId
+join Genre g
+on g.GenreId=t.GenreId
+where g.name="Rock"
+GROUP by a.ArtistId, a.Name 
+order by 3 desc
+limit 10
+
+
+/*Query 2 -query used for second insight */
+
+SELECT Title AS AlbumName, COUNT(Name) AS NoOfTracks
+FROM Album
+JOIN Track
+ON Album.AlbumId = Track.AlbumId
+GROUP BY Title
+ORDER BY 2 DESC
+LIMIT 5 ;
+
+
+/*Query 3 -query used for third insight */
+
+SELECT a.Name AS ArtistName, COUNT(p.Name) as Artistapperence 
+FROM Artist a
+JOIN Album b
+ON a.ArtistId = b.ArtistId
+JOIN Track t
+ON b.AlbumId = t.AlbumId
+JOIN PlaylistTrack l
+ON t.TrackId = l.TrackId
+JOIN Playlist p
+ON l.PlaylistId = p.PlaylistId
+GROUP BY 1 
+ORDER BY 2 DESC
+LIMIT 5
+
+
+/*Query 4 -query used for fourth insight */
+
+
+SELECT Artist.Name As ArtistName, Album.Title AS AlbumTitle, SUM(Track.Milliseconds)/1000 AS AlbumDuration
+FROM Artist
+JOIN Album
+ON Artist.ArtistId = Album.ArtistId
+JOIN Track
+ON Album.AlbumId = Track.AlbumId
+GROUP BY 1, 2
+ORDER BY 3 DESC 
+LIMIT 5
